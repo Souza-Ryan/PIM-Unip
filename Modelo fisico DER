@@ -1,0 +1,275 @@
+/* Lógico_1: */
+
+CREATE TABLE Cliente (
+    ID_Cliente REAL PRIMARY KEY,
+    Info_Cliente VARCHAR
+);
+
+CREATE TABLE Pedido_Venda (
+    ID_Pedido REAL PRIMARY KEY,
+    Quantidade INTEGER
+);
+
+CREATE TABLE Produto (
+    Disponibilidade BOOLEAN,
+    ID_Produto REAL PRIMARY KEY,
+    Quantidade INTEGER,
+    Nome VARCHAR
+);
+
+CREATE TABLE Pedido_Compra (
+    ID_Compra REAL PRIMARY KEY,
+    Quantidade INTEGER
+);
+
+CREATE TABLE Estoque (
+    ID_Produto REAL PRIMARY KEY
+);
+
+CREATE TABLE Usuario (
+    ID_Usuario VARCHAR PRIMARY KEY,
+    Senha VARCHAR
+);
+
+CREATE TABLE Funcionario (
+    ID_Funcionario REAL PRIMARY KEY,
+    Nome VARCHAR,
+    Área VARCHAR,
+    Hierarquia VARCHAR
+);
+
+CREATE TABLE Cultivo (
+    ID_Cultivo REAL PRIMARY KEY,
+    Nome VARCHAR,
+    Data_Plantio DATE,
+    Data_Coleta DATE
+);
+
+CREATE TABLE Produto (
+    ID_Produto REAL PRIMARY KEY,
+    Nome VARCHAR,
+    Validade DATE,
+    Quantidade INTEGER
+);
+
+CREATE TABLE Estoque (
+    ID_Produto REAL PRIMARY KEY,
+    Tipo VARCHAR,
+    Validade DATE,
+    Quantidade INTEGER
+);
+
+CREATE TABLE Pedidos_Produtos (
+    ID_Pedido REAL PRIMARY KEY,
+    Quantidade INTEGER
+);
+
+CREATE TABLE Saida_Produtos (
+    ID_Saida REAL PRIMARY KEY,
+    Quantidade INTEGER
+);
+
+CREATE TABLE Fornecedor (
+    ID_Fornecedor REAL PRIMARY KEY,
+    CNPJ INTEGER,
+    Nome VARCHAR,
+    Endereço VARCHAR,
+    Produto VARCHAR
+);
+
+CREATE TABLE Sementes (
+    ID_Semente REAL PRIMARY KEY,
+    Tipo VARCHAR
+);
+
+CREATE TABLE Estoque (
+    ID_Semente REAL PRIMARY KEY,
+    Quantidade INTEGER
+);
+
+CREATE TABLE Cultivo (
+    ID_Cultivo REAL PRIMARY KEY,
+    Nome VARCHAR,
+    Data_Plantio DATE,
+    Data_Coleta DATE
+);
+
+CREATE TABLE Faz (
+    fk_Cliente_ID_Cliente REAL,
+    fk_Pedido_Venda_ID_Pedido REAL
+);
+
+CREATE TABLE Busca (
+    fk_Pedido_Venda_ID_Pedido REAL,
+    fk_Produto_ID_Produto REAL
+);
+
+CREATE TABLE Faz (
+    fk_Pedido_Compra_ID_Compra REAL,
+    fk_Estoque_ID_Produto REAL
+);
+
+CREATE TABLE Verificação (
+    fk_Produto_ID_Produto REAL,
+    fk_Estoque_ID_Produto REAL
+);
+
+CREATE TABLE Tem (
+    fk_Usuario_ID_Usuario VARCHAR,
+    fk_Funcionario_ID_Funcionario REAL
+);
+
+CREATE TABLE Faz (
+    fk_Pedidos_Produtos_ID_Pedido REAL,
+    fk_Saida_Produtos_ID_Saida REAL
+);
+
+CREATE TABLE Tem (
+    fk_Estoque_ID_Produto REAL,
+    fk_Pedidos_Produtos_ID_Pedido REAL
+);
+
+CREATE TABLE Faz (
+    fk_Produto_ID_Produto REAL,
+    fk_Estoque_ID_Produto REAL
+);
+
+CREATE TABLE Faz (
+    fk_Cultivo_ID_Cultivo REAL,
+    fk_Produto_ID_Produto REAL
+);
+
+CREATE TABLE Faz (
+    fk_Fornecedor_ID_Fornecedor REAL,
+    fk_Sementes_ID_Semente REAL
+);
+
+CREATE TABLE Tem (
+    fk_Sementes_ID_Semente REAL,
+    fk_Estoque_ID_Semente REAL
+);
+
+CREATE TABLE Faz (
+    fk_Estoque_ID_Semente REAL,
+    fk_Cultivo_ID_Cultivo REAL
+);
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
+    FOREIGN KEY (fk_Cliente_ID_Cliente)
+    REFERENCES Cliente (ID_Cliente)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
+    FOREIGN KEY (fk_Pedido_Venda_ID_Pedido)
+    REFERENCES Pedido_Venda (ID_Pedido)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Busca ADD CONSTRAINT FK_Busca_1
+    FOREIGN KEY (fk_Pedido_Venda_ID_Pedido)
+    REFERENCES Pedido_Venda (ID_Pedido)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Busca ADD CONSTRAINT FK_Busca_2
+    FOREIGN KEY (fk_Produto_ID_Produto)
+    REFERENCES Produto (ID_Produto)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
+    FOREIGN KEY (fk_Pedido_Compra_ID_Compra)
+    REFERENCES Pedido_Compra (ID_Compra)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
+    FOREIGN KEY (fk_Estoque_ID_Produto)
+    REFERENCES Estoque (ID_Produto)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Verificação ADD CONSTRAINT FK_Verificação_1
+    FOREIGN KEY (fk_Produto_ID_Produto)
+    REFERENCES Produto (ID_Produto)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Verificação ADD CONSTRAINT FK_Verificação_2
+    FOREIGN KEY (fk_Estoque_ID_Produto)
+    REFERENCES Estoque (ID_Produto)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Tem ADD CONSTRAINT FK_Tem_1
+    FOREIGN KEY (fk_Usuario_ID_Usuario)
+    REFERENCES Usuario (ID_Usuario)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Tem ADD CONSTRAINT FK_Tem_2
+    FOREIGN KEY (fk_Funcionario_ID_Funcionario)
+    REFERENCES Funcionario (ID_Funcionario)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
+    FOREIGN KEY (fk_Pedidos_Produtos_ID_Pedido)
+    REFERENCES Pedidos_Produtos (ID_Pedido)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
+    FOREIGN KEY (fk_Saida_Produtos_ID_Saida)
+    REFERENCES Saida_Produtos (ID_Saida)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Tem ADD CONSTRAINT FK_Tem_1
+    FOREIGN KEY (fk_Estoque_ID_Produto)
+    REFERENCES Estoque (ID_Produto)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Tem ADD CONSTRAINT FK_Tem_2
+    FOREIGN KEY (fk_Pedidos_Produtos_ID_Pedido)
+    REFERENCES Pedidos_Produtos (ID_Pedido)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
+    FOREIGN KEY (fk_Produto_ID_Produto)
+    REFERENCES Produto (ID_Produto)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
+    FOREIGN KEY (fk_Estoque_ID_Produto)
+    REFERENCES Estoque (ID_Produto)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
+    FOREIGN KEY (fk_Cultivo_ID_Cultivo)
+    REFERENCES Cultivo (ID_Cultivo)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
+    FOREIGN KEY (fk_Produto_ID_Produto)
+    REFERENCES Produto (ID_Produto)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
+    FOREIGN KEY (fk_Fornecedor_ID_Fornecedor)
+    REFERENCES Fornecedor (ID_Fornecedor)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
+    FOREIGN KEY (fk_Sementes_ID_Semente)
+    REFERENCES Sementes (ID_Semente)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Tem ADD CONSTRAINT FK_Tem_1
+    FOREIGN KEY (fk_Sementes_ID_Semente)
+    REFERENCES Sementes (ID_Semente)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Tem ADD CONSTRAINT FK_Tem_2
+    FOREIGN KEY (fk_Estoque_ID_Semente)
+    REFERENCES Estoque (ID_Semente)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_1
+    FOREIGN KEY (fk_Estoque_ID_Semente)
+    REFERENCES Estoque (ID_Semente)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Faz ADD CONSTRAINT FK_Faz_2
+    FOREIGN KEY (fk_Cultivo_ID_Cultivo)
+    REFERENCES Cultivo (ID_Cultivo)
+    ON DELETE RESTRICT;
